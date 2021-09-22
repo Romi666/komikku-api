@@ -24,16 +24,11 @@ type Comic struct {
 func (s *Scrapper) GetAllComic() []Comic {
 	var listComic []Comic
 	s.URL = BASE_URL + "daftar-komik/"
-	s.Collector.OnHTML("a[href]", func(e *colly.HTMLElement) {
-		link := e.Attr("href")
+	s.Collector.OnHTML("h4", func(e *colly.HTMLElement) {
+		link := e.ChildAttr("a", "href")
 		fmt.Printf("Link found: %q -> %s\n", e.Text, link)
-
-		s.Collector.Visit(e.Request.AbsoluteURL(link))
 	})
 
-	s.Collector.OnRequest(func(r *colly.Request) {
-		fmt.Println("Visiting", r.URL.String())
-	})
 	err := s.Collector.Visit(s.URL)
 	if err != nil {
 		log.Println(err)
