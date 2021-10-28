@@ -1,25 +1,25 @@
-package repositories
+package queries
 
 import (
 	"github.com/gocolly/colly"
 	"komiku-srapper/bin/config"
-	"komiku-srapper/bin/modules/general/models/domain"
+	"komiku-srapper/bin/modules/manga/models/domain"
 	"komiku-srapper/bin/pkg/utils"
 )
 
-type GeneralQueryImpl struct {
+type MangaQueryImpl struct {
 	URL			string
 	Collector	*colly.Collector
 }
 
-func NewGeneralQueryImpl(url string, collector *colly.Collector) GeneralQuery {
-	return &GeneralQueryImpl{
+func NewMangaQuery(url string, collector *colly.Collector) MangaQuery {
+	return &MangaQueryImpl{
 		URL: url,
 		Collector: collector,
 	}
 }
 
-func (g GeneralQueryImpl) GetAllComic() <- chan utils.Result {
+func (g MangaQueryImpl) GetAllComic() <- chan utils.Result {
 	output := make(chan utils.Result)
 
 	go func() {

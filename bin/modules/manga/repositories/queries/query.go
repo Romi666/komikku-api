@@ -1,7 +1,7 @@
-package repositories
+package queries
 
 import "komiku-srapper/bin/pkg/utils"
 
-type GeneralQuery interface {
+type MangaQuery interface {
 	GetAllComic() <- chan utils.Result
 }

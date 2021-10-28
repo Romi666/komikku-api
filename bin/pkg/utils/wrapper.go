@@ -110,7 +110,7 @@ func LogError(detail interface{}, msg string) {
 	}).Error(msg)
 }
 
-// LogActivity is a function to create format log contains method, url, and request body. It's created after service hit.
+// LogActivity is a function to create format log contains method, url, and request body. It's created after usecases hit.
 func LogActivity(method interface{}, url interface{}, req interface{}, msg string) {
 	// Assign detail with parameter above and generate console
 	logger.WithFields(logger.Fields{
