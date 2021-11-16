@@ -6,4 +6,26 @@ type (
 		Image		string	`json:"image"`
 		Endpoint	string	`json:"endpoint"`
 	}
+
+	ComicDetail struct {
+		Title				string	`json:"title"`
+		FirstChapter		string 	`json:"first_chapter"`
+		UrlFirstChapter		string 	`json:"url_first_chapter"`
+		LatestChapter		string 	`json:"latest_chapter"`
+		UrlLatestChapter 	string 	`json:"url_latest_chapter"`
+		Description			string `json:"description"`
+		Thumbnail			string `json:"thumbnail"`
+
+	}
+
+	ComicInfo struct {
+		Title	string 		`json:"title"`
+		Type	string 		`json:"type"`
+		Author	string 		`json:"author"`
+		Status	string 		`json:"status"`
+		Rating	string 		`json:"rating"`
+		Genre	[]string 	`json:"genre"`
+	}
+
+
 )

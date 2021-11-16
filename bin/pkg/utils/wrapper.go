@@ -37,7 +37,6 @@ func Response(data interface{}, message string, code int, c echo.Context) error 
 		Message: message,
 		Code:    code,
 	}
-	LogSuccess(data, message)
 	return c.JSON(code, result)
 }
 
@@ -92,14 +91,6 @@ func getErrorStatusCode(err interface{}) httpError.CommonError {
 		errData.Code = http.StatusConflict
 		return errData
 	}
-}
-
-// LogSuccess is a function of success process that only generate log to console
-func LogSuccess(detail interface{}, msg string) {
-	// Assign detail with parameter above and generate console
-	logger.WithFields(logger.Fields{
-		"detail": detail,
-	}).Info(msg)
 }
 
 // LogError is a function of failed process that only generate log to console

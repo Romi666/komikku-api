@@ -12,6 +12,23 @@ type mangaCommandUsecase struct {
 	mangaQuery	queries.MangaQuery
 }
 
+func (m mangaCommandUsecase) GetComicInfo(endpoint string) utils.Result {
+	var result utils.Result
+
+	queryRes := <- m.mangaQuery.GetComicInfo(endpoint)
+	if queryRes.Error != nil {
+		errObj := httpError.NewNotFound()
+		errObj.Message = fmt.Sprintf("%v", queryRes.Error)
+		result.Error = errObj
+		return result
+	}
+
+	comicInfo := queryRes.Data.(domain.ComicInfo)
+	result.Data = comicInfo
+
+	return result
+}
+
 func (m mangaCommandUsecase) GetAllComic() utils.Result {
 	var result utils.Result
 
