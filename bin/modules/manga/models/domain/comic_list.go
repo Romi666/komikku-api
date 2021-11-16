@@ -19,12 +19,13 @@ type (
 	}
 
 	ComicInfo struct {
-		Title	string 		`json:"title"`
-		Type	string 		`json:"type"`
-		Author	string 		`json:"author"`
-		Status	string 		`json:"status"`
-		Rating	string 		`json:"rating"`
-		Genre	[]string 	`json:"genre"`
+		Thumbnail	string 		`json:"thumbnail"`
+		Title		string 		`json:"title"`
+		Type		string 		`json:"type"`
+		Author		string 		`json:"author"`
+		Status		string 		`json:"status"`
+		Rating		string 		`json:"rating"`
+		Genre		[]string 	`json:"genre"`
 	}
 
 

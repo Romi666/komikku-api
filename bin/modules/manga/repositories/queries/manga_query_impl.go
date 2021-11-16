@@ -71,6 +71,15 @@ func (g MangaQueryImpl) GetComicInfo(endpoint string) <-chan utils.Result {
 
 			})
 		})
+		g.Collector.OnHTML("ul.genre", func(e *colly.HTMLElement) {
+			e.ForEach("li.genre", func(i int, element *colly.HTMLElement) {
+				comicInfo.Genre = append(comicInfo.Genre, element.Text)
+			})
+		})
+
+		g.Collector.OnHTML("div.ims", func(e *colly.HTMLElement) {
+			comicInfo.Thumbnail = strings.TrimSuffix(e.ChildAttr("img", "src"), "?w=225&quality=60")
+		})
 		err := g.Collector.Visit(g.URL)
 		if err != nil {
 			output <- utils.Result{
