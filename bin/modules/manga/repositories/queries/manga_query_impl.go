@@ -114,3 +114,29 @@ func (g MangaQueryImpl) GetListChapter(endpoint string) utils.Result {
 	return output
 }
 
+func (g MangaQueryImpl) DetailChapter(endpoint string) utils.Result {
+	var output utils.Result
+	var chapter domain.ChapterDetail
+
+	g.URL = config.GlobalEnv.BaseURL + endpoint
+	g.Collector.AllowURLRevisit = true
+	g.Collector.OnHTML("section[id=Baca_Komik]", func(e *colly.HTMLElement) {
+		imageList := e.ChildAttrs("img", "src")
+		chapter.Image = imageList
+	})
+	g.Collector.OnHTML("header[id=Judul]", func(e *colly.HTMLElement) {
+		chapter.Title = e.ChildText("h1")
+	})
+	err := g.Collector.Visit(g.URL)
+	if err != nil {
+		output = utils.Result{
+			Error: err,
+		}
+		return output
+	}
+	output = utils.Result{
+		Data: chapter,
+	}
+	return output
+}
+
