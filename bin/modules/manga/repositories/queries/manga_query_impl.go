@@ -125,7 +125,9 @@ func (g MangaQueryImpl) DetailChapter(endpoint string) utils.Result {
 		chapter.Image = imageList
 	})
 	g.Collector.OnHTML("header[id=Judul]", func(e *colly.HTMLElement) {
-		chapter.Title = e.ChildText("h1")
+		if e.Index == 0 {
+			chapter.Title = e.ChildText("h1")
+		}
 	})
 	err := g.Collector.Visit(g.URL)
 	if err != nil {
