@@ -26,7 +26,12 @@ type (
 		Status		string 		`json:"status"`
 		Rating		string 		`json:"rating"`
 		Genre		[]string 	`json:"genre"`
+		ChapterList []Chapter 	`json:"chapter_list"`
 	}
 
+	Chapter struct {
+		Name		string 		`json:"name"`
+		Endpoint	string		`json:"endpoint"`
+	}
 
 )

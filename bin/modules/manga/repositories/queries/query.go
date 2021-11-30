@@ -3,6 +3,7 @@ package queries
 import "komiku-srapper/bin/pkg/utils"
 
 type MangaQuery interface {
-	GetAllComic() <- chan utils.Result
-	GetComicInfo(endpoint string) <- chan utils.Result
+	GetAllComic() utils.Result
+	GetComicInfo(endpoint string) utils.Result
+	GetListChapter(endpoint string) utils.Result
 }

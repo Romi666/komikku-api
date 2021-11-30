@@ -15,16 +15,29 @@ type mangaCommandUsecase struct {
 func (m mangaCommandUsecase) GetComicInfo(endpoint string) utils.Result {
 	var result utils.Result
 
-	queryRes := <- m.mangaQuery.GetComicInfo(endpoint)
-	if queryRes.Error != nil {
+	resultGetComicInfo := m.mangaQuery.GetComicInfo(endpoint)
+	if resultGetComicInfo.Error != nil {
 		errObj := httpError.NewNotFound()
-		errObj.Message = fmt.Sprintf("%v", queryRes.Error)
+		errObj.Message = fmt.Sprintf("%v", resultGetComicInfo.Error)
 		result.Error = errObj
 		return result
 	}
 
-	comicInfo := queryRes.Data.(domain.ComicInfo)
+	comicInfo := resultGetComicInfo.Data.(domain.ComicInfo)
+
+	resultGetChapter := m.mangaQuery.GetListChapter(endpoint)
+	if resultGetChapter.Error != nil {
+		errObj := httpError.NewNotFound()
+		errObj.Message = fmt.Sprintf("%v", resultGetChapter.Error)
+		result.Error = errObj
+		return result
+	}
+
+	chapterList := resultGetChapter.Data.([]domain.Chapter)
+	comicInfo.ChapterList = chapterList
+
 	result.Data = comicInfo
+
 
 	return result
 }
@@ -32,7 +45,7 @@ func (m mangaCommandUsecase) GetComicInfo(endpoint string) utils.Result {
 func (m mangaCommandUsecase) GetAllComic() utils.Result {
 	var result utils.Result
 
-	queryRes := <- m.mangaQuery.GetAllComic()
+	queryRes := m.mangaQuery.GetAllComic()
 	if queryRes.Error != nil {
 		errObj := httpError.NewNotFound()
 		errObj.Message = fmt.Sprintf("%v", queryRes.Error)
