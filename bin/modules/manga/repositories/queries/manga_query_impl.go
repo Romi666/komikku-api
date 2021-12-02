@@ -23,7 +23,7 @@ func NewMangaQuery(url string, collector *colly.Collector) MangaQuery {
 func (g MangaQueryImpl) GetAllComic() utils.Result {
 	var output utils.Result
 	var result []domain.Comic
-	g.URL = config.GlobalEnv.BaseURL + "/daftar-komik/"
+	g.URL = config.GlobalEnv.BaseURL + "/daftar-komik"
 	g.Collector.AllowURLRevisit = true
 	g.Collector.OnHTML("div.ls4", func(e *colly.HTMLElement) {
 		var comic domain.Comic
