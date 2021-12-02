@@ -7,4 +7,5 @@ type MangaUsecase interface {
 	GetComicInfo(endpoint string) utils.Result
 	GetChapterDetail(endpoint string) utils.Result
 	SearchManga(query string) utils.Result
+	GetAllGenre() utils.Result
 }

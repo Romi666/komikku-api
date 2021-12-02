@@ -107,6 +107,32 @@ func (m mangaCommandUsecase) SearchManga(query string) utils.Result {
 	return result
 }
 
+func (m mangaCommandUsecase) GetAllGenre() utils.Result {
+	var result utils.Result
+
+	queryRes := m.mangaQuery.GetAllGenre()
+
+	if queryRes.Error != nil {
+		errObj := httpError.NewNotFound()
+		errObj.Message = fmt.Sprintf("%v", queryRes.Error)
+		result.Error = errObj
+		return result
+	}
+
+	resultGetGenre := queryRes.Data.([]domain.Genre)
+	if len(resultGetGenre) == 0 {
+		errObj := httpError.NewNotFound()
+		errObj.Message = fmt.Sprintf("%v", "Data not found")
+		result.Error = errObj
+		return result
+	}
+
+	result.Data = resultGetGenre
+	return result
+}
+
+
+
 func CreateNewMangaUsecase(mangaQuery queries.MangaQuery) MangaUsecase {
 	return &mangaCommandUsecase{
 		mangaQuery: mangaQuery,

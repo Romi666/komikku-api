@@ -8,4 +8,5 @@ type MangaQuery interface {
 	GetListChapter(endpoint string) utils.Result
 	DetailChapter(endpoint string) utils.Result
 	SearchManga(query string) utils.Result
+	GetAllGenre() utils.Result
 }

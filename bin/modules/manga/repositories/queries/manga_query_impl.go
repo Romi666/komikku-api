@@ -177,3 +177,36 @@ func (g MangaQueryImpl) SearchManga(query string) utils.Result {
 	return output
 }
 
+func (g MangaQueryImpl) GetAllGenre() utils.Result {
+	var output utils.Result
+	var result []domain.Genre
+
+	g.URL = fmt.Sprint("https://data.komiku.id/pustaka/")
+	g.Collector.AllowURLRevisit = true
+	g.Collector.OnHTML("ul.genre", func(e *colly.HTMLElement) {
+		e.ForEach("li", func(i int, e2 *colly.HTMLElement) {
+			var genre domain.Genre
+			genre.Endpoint = strings.Replace(e2.ChildAttr("a", "href"), config.GlobalEnv.BaseURL, "", 1)
+			genre.Endpoint = "/" + genre.Endpoint
+			genre.Title  = e2.ChildText("a")
+
+			result = append(result, genre)
+		})
+	})
+
+	err := g.Collector.Visit(g.URL)
+	if err != nil {
+		output = utils.Result{
+			Error: err,
+		}
+
+		return output
+	}
+
+	output = utils.Result{
+		Data:  result,
+	}
+
+	return output
+}
+
