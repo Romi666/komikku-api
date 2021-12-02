@@ -28,6 +28,7 @@ func(m *MangaHandler) Mount(router *echo.Echo) {
 	router.GET("/comic/list", m.GetAllComic)
 	router.GET("/comic/:endpoint", m.GetComicInfo)
 	router.GET("/comic/chapter/:endpoint", m.GetChapterDetail)
+	router.GET("/comic/search", m.SearchManga)
 }
 
 func(m *MangaHandler) GetAllComic(c echo.Context) error {
@@ -59,4 +60,15 @@ func(m *MangaHandler) GetChapterDetail(c echo.Context) error {
 	}
 
 	return utils.Response(result.Data, "Get Chapter Detail", http.StatusOK, c)
+}
+
+func(m *MangaHandler) SearchManga(c echo.Context) error {
+	query := c.QueryParam("query")
+	result := m.mangaCommandUsecase.SearchManga(query)
+
+	if result.Error != nil {
+		return utils.ResponseError(result.Error, c)
+	}
+
+	return utils.Response(result.Data, "Search manga", http.StatusOK, c)
 }

@@ -1,6 +1,7 @@
 package queries
 
 import (
+	"fmt"
 	"github.com/gocolly/colly"
 	"komiku-srapper/bin/config"
 	"komiku-srapper/bin/modules/manga/models/domain"
@@ -139,6 +140,40 @@ func (g MangaQueryImpl) DetailChapter(endpoint string) utils.Result {
 	output = utils.Result{
 		Data: chapter,
 	}
+	return output
+}
+
+func (g MangaQueryImpl) SearchManga(query string) utils.Result {
+	var output utils.Result
+	var result []domain.Comic
+	g.URL = fmt.Sprintf("https://data.komiku.id/cari/?post_type=manga&s=%s", query)
+	g.Collector.AllowURLRevisit = true
+	g.Collector.OnHTML("div.bge", func(e *colly.HTMLElement) {
+		var comic domain.Comic
+		e.ForEach("div.bgei", func(i int, e2 *colly.HTMLElement) {
+			comic.Image = e2.ChildAttr("img", "data-src")
+			comic.Endpoint = strings.Replace(e2.ChildAttr("a", "href"), config.GlobalEnv.BaseURL, "", 1)
+			comic.Endpoint = "/" + comic.Endpoint
+
+		})
+		e.ForEach("div.kan", func(i int, e2 *colly.HTMLElement) {
+			comic.Title = e2.ChildText("h3")
+		})
+		result = append(result, comic)
+	})
+	err := g.Collector.Visit(g.URL)
+	if err != nil {
+		output = utils.Result{
+			Error: err,
+		}
+
+		return output
+	}
+
+	output = utils.Result{
+		Data:  result,
+	}
+
 	return output
 }
 

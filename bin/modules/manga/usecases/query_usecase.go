@@ -83,6 +83,30 @@ func (m mangaCommandUsecase) GetAllComic() utils.Result {
 	return result
 }
 
+func (m mangaCommandUsecase) SearchManga(query string) utils.Result {
+	var result utils.Result
+
+	queryRes := m.mangaQuery.SearchManga(query)
+
+	if queryRes.Error != nil {
+		errObj := httpError.NewNotFound()
+		errObj.Message = fmt.Sprintf("%v", queryRes.Error)
+		result.Error = errObj
+		return result
+	}
+
+	resultGetComic := queryRes.Data.([]domain.Comic)
+	if len(resultGetComic) == 0 {
+		errObj := httpError.NewNotFound()
+		errObj.Message = fmt.Sprintf("%v", "Data not found")
+		result.Error = errObj
+		return result
+	}
+
+	result.Data = resultGetComic
+	return result
+}
+
 func CreateNewMangaUsecase(mangaQuery queries.MangaQuery) MangaUsecase {
 	return &mangaCommandUsecase{
 		mangaQuery: mangaQuery,
