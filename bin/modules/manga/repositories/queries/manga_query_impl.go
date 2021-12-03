@@ -210,3 +210,105 @@ func (g MangaQueryImpl) GetAllGenre() utils.Result {
 	return output
 }
 
+func (g MangaQueryImpl) GetPopularManga() utils.Result {
+	var output utils.Result
+	var result []domain.Comic
+	g.URL = fmt.Sprint("https://data.komiku.id/other/hot/")
+	g.Collector.AllowURLRevisit = true
+	g.Collector.OnHTML("div.bge", func(e *colly.HTMLElement) {
+		var comic domain.Comic
+		e.ForEach("div.bgei", func(i int, e2 *colly.HTMLElement) {
+			comic.Image = e2.ChildAttr("img", "data-src")
+			comic.Endpoint = strings.Replace(e2.ChildAttr("a", "href"), config.GlobalEnv.BaseURL, "", 1)
+			comic.Endpoint = "/" + comic.Endpoint
+
+		})
+		e.ForEach("div.kan", func(i int, e2 *colly.HTMLElement) {
+			comic.Title = e2.ChildText("h3")
+		})
+		result = append(result, comic)
+	})
+	err := g.Collector.Visit(g.URL)
+	if err != nil {
+		output = utils.Result{
+			Error: err,
+		}
+
+		return output
+	}
+
+	output = utils.Result{
+		Data:  result,
+	}
+
+	return output
+}
+
+func (g MangaQueryImpl) GetRecommendedManga() utils.Result {
+	var output utils.Result
+	var result []domain.Comic
+	g.URL = fmt.Sprint("https://data.komiku.id/other/rekomendasi/")
+	g.Collector.AllowURLRevisit = true
+	g.Collector.OnHTML("div.bge", func(e *colly.HTMLElement) {
+		var comic domain.Comic
+		e.ForEach("div.bgei", func(i int, e2 *colly.HTMLElement) {
+			comic.Image = e2.ChildAttr("img", "data-src")
+			comic.Endpoint = strings.Replace(e2.ChildAttr("a", "href"), config.GlobalEnv.BaseURL, "", 1)
+			comic.Endpoint = "/" + comic.Endpoint
+
+		})
+		e.ForEach("div.kan", func(i int, e2 *colly.HTMLElement) {
+			comic.Title = e2.ChildText("h3")
+		})
+		result = append(result, comic)
+	})
+	err := g.Collector.Visit(g.URL)
+	if err != nil {
+		output = utils.Result{
+			Error: err,
+		}
+
+		return output
+	}
+
+	output = utils.Result{
+		Data:  result,
+	}
+
+	return output
+}
+
+func (g MangaQueryImpl) GetNewestManga() utils.Result {
+	var output utils.Result
+	var result []domain.Comic
+	g.URL = fmt.Sprint("https://data.komiku.id/pustaka/")
+	g.Collector.AllowURLRevisit = true
+	g.Collector.OnHTML("div.bge", func(e *colly.HTMLElement) {
+		var comic domain.Comic
+		e.ForEach("div.bgei", func(i int, e2 *colly.HTMLElement) {
+			comic.Image = e2.ChildAttr("img", "data-src")
+			comic.Endpoint = strings.Replace(e2.ChildAttr("a", "href"), config.GlobalEnv.BaseURL, "", 1)
+			comic.Endpoint = "/" + comic.Endpoint
+
+		})
+		e.ForEach("div.kan", func(i int, e2 *colly.HTMLElement) {
+			comic.Title = e2.ChildText("h3")
+		})
+		result = append(result, comic)
+	})
+	err := g.Collector.Visit(g.URL)
+	if err != nil {
+		output = utils.Result{
+			Error: err,
+		}
+
+		return output
+	}
+
+	output = utils.Result{
+		Data:  result,
+	}
+
+	return output
+}
+

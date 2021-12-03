@@ -30,6 +30,9 @@ func(m *MangaHandler) Mount(router *echo.Echo) {
 	router.GET("/comic/chapter/:endpoint", m.GetChapterDetail)
 	router.GET("/comic/search", m.SearchManga)
 	router.GET("/comic/genre", m.GetAllGenre)
+	router.GET("/comic/popular", m.GetPopularManga)
+	router.GET("/comic/recommended", m.GetRecommendedManga)
+	router.GET("/comic/newest", m.GetNewestManga)
 }
 
 func(m *MangaHandler) GetAllComic(c echo.Context) error {
@@ -82,4 +85,34 @@ func (m *MangaHandler) GetAllGenre(c echo.Context) error {
 	}
 
 	return utils.Response(result.Data, "Get all genre", http.StatusOK, c)
+}
+
+func (m *MangaHandler) GetPopularManga(c echo.Context) error {
+	result := m.mangaCommandUsecase.GetPopularManga()
+
+	if result.Error != nil {
+		return utils.ResponseError(result.Error, c)
+	}
+
+	return utils.Response(result.Data, "Search manga", http.StatusOK, c)
+}
+
+func (m *MangaHandler) GetRecommendedManga(c echo.Context) error {
+	result := m.mangaCommandUsecase.GetRecommendedManga()
+
+	if result.Error != nil {
+		return utils.ResponseError(result.Error, c)
+	}
+
+	return utils.Response(result.Data, "Search manga", http.StatusOK, c)
+}
+
+func (m *MangaHandler) GetNewestManga(c echo.Context) error  {
+	result := m.mangaCommandUsecase.GetNewestManga()
+
+	if result.Error != nil {
+		return utils.ResponseError(result.Error, c)
+	}
+
+	return utils.Response(result.Data, "Search manga", http.StatusOK, c)
 }

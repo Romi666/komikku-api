@@ -131,6 +131,77 @@ func (m mangaCommandUsecase) GetAllGenre() utils.Result {
 	return result
 }
 
+func (m mangaCommandUsecase) GetPopularManga() utils.Result {
+	var result utils.Result
+
+	queryRes := m.mangaQuery.GetPopularManga()
+
+	if queryRes.Error != nil {
+		errObj := httpError.NewNotFound()
+		errObj.Message = fmt.Sprintf("%v", queryRes.Error)
+		result.Error = errObj
+		return result
+	}
+
+	resultGetComic := queryRes.Data.([]domain.Comic)
+	if len(resultGetComic) == 0 {
+		errObj := httpError.NewNotFound()
+		errObj.Message = fmt.Sprintf("%v", "Data not found")
+		result.Error = errObj
+		return result
+	}
+
+	result.Data = resultGetComic
+	return result
+}
+
+func (m mangaCommandUsecase) GetRecommendedManga() utils.Result {
+	var result utils.Result
+
+	queryRes := m.mangaQuery.GetRecommendedManga()
+
+	if queryRes.Error != nil {
+		errObj := httpError.NewNotFound()
+		errObj.Message = fmt.Sprintf("%v", queryRes.Error)
+		result.Error = errObj
+		return result
+	}
+
+	resultGetComic := queryRes.Data.([]domain.Comic)
+	if len(resultGetComic) == 0 {
+		errObj := httpError.NewNotFound()
+		errObj.Message = fmt.Sprintf("%v", "Data not found")
+		result.Error = errObj
+		return result
+	}
+
+	result.Data = resultGetComic
+	return result
+}
+
+func (m mangaCommandUsecase) GetNewestManga() utils.Result {
+	var result utils.Result
+
+	queryRes := m.mangaQuery.GetNewestManga()
+
+	if queryRes.Error != nil {
+		errObj := httpError.NewNotFound()
+		errObj.Message = fmt.Sprintf("%v", queryRes.Error)
+		result.Error = errObj
+		return result
+	}
+
+	resultGetComic := queryRes.Data.([]domain.Comic)
+	if len(resultGetComic) == 0 {
+		errObj := httpError.NewNotFound()
+		errObj.Message = fmt.Sprintf("%v", "Data not found")
+		result.Error = errObj
+		return result
+	}
+
+	result.Data = resultGetComic
+	return result
+}
 
 
 func CreateNewMangaUsecase(mangaQuery queries.MangaQuery) MangaUsecase {
