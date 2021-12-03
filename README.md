@@ -25,4 +25,4 @@ Restful API Manga bahasa Indonesia built with ❤️ and Go
    
 # Documentation
 
-__POSTMAN__ __COLLECTION__ = https://www.getpostman.com/collections/b17ccf808092cc593309
+__POSTMAN__ __COLLECTION__ = https://www.getpostman.com/collections/4c984c36d27bb591c445
