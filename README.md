@@ -22,7 +22,10 @@ Restful API Manga bahasa Indonesia built with ❤️ and Go
     ```
    go mod download
    ```
-   
+5. Run program
+   ```
+   go run bin\app\main.go
+   ```
 # Documentation
 
 __POSTMAN__ __COLLECTION__ = https://www.getpostman.com/collections/4c984c36d27bb591c445

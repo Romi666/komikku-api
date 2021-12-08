@@ -21,10 +21,14 @@ func NewMangaQuery(url string, collector *colly.Collector) MangaQuery {
 	}
 }
 
-func (g MangaQueryImpl) GetAllComic() utils.Result {
+func (g MangaQueryImpl) GetAllComic(filter string) utils.Result {
 	var output utils.Result
 	var result []domain.Comic
-	g.URL = config.GlobalEnv.BaseURL + "/daftar-komik"
+	if filter != "" {
+		g.URL = config.GlobalEnv.BaseURL + "daftar-komik/?tipe=" + filter
+	}else {
+		g.URL = config.GlobalEnv.BaseURL + "daftar-komik"
+	}
 	g.Collector.AllowURLRevisit = true
 	g.Collector.OnHTML("div.ls4", func(e *colly.HTMLElement) {
 		var comic domain.Comic

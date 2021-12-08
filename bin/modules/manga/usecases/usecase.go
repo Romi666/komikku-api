@@ -3,7 +3,7 @@ package usecases
 import "komiku-srapper/bin/pkg/utils"
 
 type MangaUsecase interface {
-	GetAllComic() utils.Result
+	GetAllComic(filter string) utils.Result
 	GetComicInfo(endpoint string) utils.Result
 	SearchManga(query string) utils.Result
 	GetAllGenre() utils.Result

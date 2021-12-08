@@ -37,7 +37,8 @@ func(m *MangaHandler) Mount(router *echo.Echo) {
 }
 
 func(m *MangaHandler) GetAllComic(c echo.Context) error {
-	result := m.mangaCommandUsecase.GetAllComic()
+	filter := c.QueryParam("filter")
+	result := m.mangaCommandUsecase.GetAllComic(filter)
 	if result.Error != nil {
 		return utils.ResponseError(result.Error, c)
 	}
