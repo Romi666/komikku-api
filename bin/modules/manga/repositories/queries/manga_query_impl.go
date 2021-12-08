@@ -87,62 +87,6 @@ func (g MangaQueryImpl) GetComicInfo(endpoint string) utils.Result {
 return output
 }
 
-func (g MangaQueryImpl) GetListChapter(endpoint string) utils.Result {
-	var output utils.Result
-	var chapterList []domain.Chapter
-	g.URL = config.GlobalEnv.BaseURL + endpoint
-	g.Collector.AllowURLRevisit = true
-	g.Collector.OnHTML("tbody._3Rsjq", func(e *colly.HTMLElement) {
-		e.ForEach("tr", func(i int, element *colly.HTMLElement) {
-			var chapter domain.Chapter
-			if element.ChildText("td.judulseries") != "" {
-				chapter.Endpoint = element.ChildAttr("a", "href")
-				chapter.Name = element.ChildText("td.judulseries")
-				chapterList = append(chapterList, chapter)
-			}
-		})
-	})
-	err := g.Collector.Visit(g.URL)
-	if err != nil {
-		output = utils.Result{
-			Error: err,
-		}
-	}
-	output = utils.Result{
-		Data: chapterList,
-	}
-
-	return output
-}
-
-func (g MangaQueryImpl) DetailChapter(endpoint string) utils.Result {
-	var output utils.Result
-	var chapter domain.ChapterDetail
-
-	g.URL = config.GlobalEnv.BaseURL + endpoint
-	g.Collector.AllowURLRevisit = true
-	g.Collector.OnHTML("section[id=Baca_Komik]", func(e *colly.HTMLElement) {
-		imageList := e.ChildAttrs("img", "src")
-		chapter.Image = imageList
-	})
-	g.Collector.OnHTML("header[id=Judul]", func(e *colly.HTMLElement) {
-		if e.Index == 0 {
-			chapter.Title = e.ChildText("h1")
-		}
-	})
-	err := g.Collector.Visit(g.URL)
-	if err != nil {
-		output = utils.Result{
-			Error: err,
-		}
-		return output
-	}
-	output = utils.Result{
-		Data: chapter,
-	}
-	return output
-}
-
 func (g MangaQueryImpl) SearchManga(query string) utils.Result {
 	var output utils.Result
 	var result []domain.Comic
@@ -151,7 +95,7 @@ func (g MangaQueryImpl) SearchManga(query string) utils.Result {
 	g.Collector.OnHTML("div.bge", func(e *colly.HTMLElement) {
 		var comic domain.Comic
 		e.ForEach("div.bgei", func(i int, e2 *colly.HTMLElement) {
-			comic.Image = e2.ChildAttr("img", "data-src")
+			comic.Image = strings.TrimSuffix(e2.ChildAttr("img", "data-src"), "?resize=450,235&quality=60")
 			comic.Endpoint = strings.Replace(e2.ChildAttr("a", "href"), config.GlobalEnv.BaseURL, "", 1)
 			comic.Endpoint = "/" + comic.Endpoint
 
@@ -218,7 +162,7 @@ func (g MangaQueryImpl) GetPopularManga() utils.Result {
 	g.Collector.OnHTML("div.bge", func(e *colly.HTMLElement) {
 		var comic domain.Comic
 		e.ForEach("div.bgei", func(i int, e2 *colly.HTMLElement) {
-			comic.Image = e2.ChildAttr("img", "data-src")
+			comic.Image = strings.TrimSuffix(e2.ChildAttr("img", "data-src"), "?resize=450,235&quality=60")
 			comic.Endpoint = strings.Replace(e2.ChildAttr("a", "href"), config.GlobalEnv.BaseURL, "", 1)
 			comic.Endpoint = "/" + comic.Endpoint
 
@@ -252,7 +196,7 @@ func (g MangaQueryImpl) GetRecommendedManga() utils.Result {
 	g.Collector.OnHTML("div.bge", func(e *colly.HTMLElement) {
 		var comic domain.Comic
 		e.ForEach("div.bgei", func(i int, e2 *colly.HTMLElement) {
-			comic.Image = e2.ChildAttr("img", "data-src")
+			comic.Image = strings.Trim(e2.ChildAttr("img", "data-src"), "?resize=450,235&quality=60")
 			comic.Endpoint = strings.Replace(e2.ChildAttr("a", "href"), config.GlobalEnv.BaseURL, "", 1)
 			comic.Endpoint = "/" + comic.Endpoint
 
@@ -286,7 +230,7 @@ func (g MangaQueryImpl) GetNewestManga() utils.Result {
 	g.Collector.OnHTML("div.bge", func(e *colly.HTMLElement) {
 		var comic domain.Comic
 		e.ForEach("div.bgei", func(i int, e2 *colly.HTMLElement) {
-			comic.Image = e2.ChildAttr("img", "data-src")
+			comic.Image = strings.TrimSuffix(e2.ChildAttr("img", "data-src"),"?resize=450,235&quality=60")
 			comic.Endpoint = strings.Replace(e2.ChildAttr("a", "href"), config.GlobalEnv.BaseURL, "", 1)
 			comic.Endpoint = "/" + comic.Endpoint
 

@@ -2,32 +2,17 @@ package usecases
 
 import (
 	"fmt"
-	"komiku-srapper/bin/modules/manga/models/domain"
-	"komiku-srapper/bin/modules/manga/repositories/queries"
+	chapterM "komiku-srapper/bin/modules/chapter/models/domain"
+	chapterQ "komiku-srapper/bin/modules/chapter/repositories/queries"
+	mangaM "komiku-srapper/bin/modules/manga/models/domain"
+	mangaQ "komiku-srapper/bin/modules/manga/repositories/queries"
 	httpError "komiku-srapper/bin/pkg/http-error"
 	"komiku-srapper/bin/pkg/utils"
 )
 
 type mangaCommandUsecase struct {
-	mangaQuery	queries.MangaQuery
-}
-
-func (m mangaCommandUsecase) GetChapterDetail(endpoint string) utils.Result {
-	var result utils.Result
-
-	resultGetChapterDetail := m.mangaQuery.DetailChapter(endpoint)
-	if resultGetChapterDetail.Error != nil {
-		errObj := httpError.NewNotFound()
-		errObj.Message = fmt.Sprintf("%v", resultGetChapterDetail.Error)
-		result.Error = errObj
-		return result
-	}
-
-	chapterDetail := resultGetChapterDetail.Data.(domain.ChapterDetail)
-
-	result.Data = chapterDetail
-
-	return result
+	mangaQuery	mangaQ.MangaQuery
+	chapterQuery chapterQ.ChapterQuery
 }
 
 func (m mangaCommandUsecase) GetComicInfo(endpoint string) utils.Result {
@@ -41,9 +26,9 @@ func (m mangaCommandUsecase) GetComicInfo(endpoint string) utils.Result {
 		return result
 	}
 
-	comicInfo := resultGetComicInfo.Data.(domain.ComicInfo)
+	comicInfo := resultGetComicInfo.Data.(mangaM.ComicInfo)
 
-	resultGetChapter := m.mangaQuery.GetListChapter(endpoint)
+	resultGetChapter := m.chapterQuery.GetListChapter(endpoint)
 	if resultGetChapter.Error != nil {
 		errObj := httpError.NewNotFound()
 		errObj.Message = fmt.Sprintf("%v", resultGetChapter.Error)
@@ -51,7 +36,7 @@ func (m mangaCommandUsecase) GetComicInfo(endpoint string) utils.Result {
 		return result
 	}
 
-	chapterList := resultGetChapter.Data.([]domain.Chapter)
+	chapterList := resultGetChapter.Data.([]chapterM.Chapter)
 	comicInfo.ChapterList = chapterList
 
 	result.Data = comicInfo
@@ -71,7 +56,7 @@ func (m mangaCommandUsecase) GetAllComic() utils.Result {
 		return result
 	}
 
-	resultGetManga := queryRes.Data.([]domain.Comic)
+	resultGetManga := queryRes.Data.([]mangaM.Comic)
 	if len(resultGetManga) == 0 {
 		errObj := httpError.NewNotFound()
 		errObj.Message = fmt.Sprintf("%v", queryRes.Error)
@@ -95,7 +80,7 @@ func (m mangaCommandUsecase) SearchManga(query string) utils.Result {
 		return result
 	}
 
-	resultGetComic := queryRes.Data.([]domain.Comic)
+	resultGetComic := queryRes.Data.([]mangaM.Comic)
 	if len(resultGetComic) == 0 {
 		errObj := httpError.NewNotFound()
 		errObj.Message = fmt.Sprintf("%v", "Data not found")
@@ -119,7 +104,7 @@ func (m mangaCommandUsecase) GetAllGenre() utils.Result {
 		return result
 	}
 
-	resultGetGenre := queryRes.Data.([]domain.Genre)
+	resultGetGenre := queryRes.Data.([]mangaM.Genre)
 	if len(resultGetGenre) == 0 {
 		errObj := httpError.NewNotFound()
 		errObj.Message = fmt.Sprintf("%v", "Data not found")
@@ -143,7 +128,7 @@ func (m mangaCommandUsecase) GetPopularManga() utils.Result {
 		return result
 	}
 
-	resultGetComic := queryRes.Data.([]domain.Comic)
+	resultGetComic := queryRes.Data.([]mangaM.Comic)
 	if len(resultGetComic) == 0 {
 		errObj := httpError.NewNotFound()
 		errObj.Message = fmt.Sprintf("%v", "Data not found")
@@ -167,7 +152,7 @@ func (m mangaCommandUsecase) GetRecommendedManga() utils.Result {
 		return result
 	}
 
-	resultGetComic := queryRes.Data.([]domain.Comic)
+	resultGetComic := queryRes.Data.([]mangaM.Comic)
 	if len(resultGetComic) == 0 {
 		errObj := httpError.NewNotFound()
 		errObj.Message = fmt.Sprintf("%v", "Data not found")
@@ -191,7 +176,7 @@ func (m mangaCommandUsecase) GetNewestManga() utils.Result {
 		return result
 	}
 
-	resultGetComic := queryRes.Data.([]domain.Comic)
+	resultGetComic := queryRes.Data.([]mangaM.Comic)
 	if len(resultGetComic) == 0 {
 		errObj := httpError.NewNotFound()
 		errObj.Message = fmt.Sprintf("%v", "Data not found")
@@ -204,8 +189,9 @@ func (m mangaCommandUsecase) GetNewestManga() utils.Result {
 }
 
 
-func CreateNewMangaUsecase(mangaQuery queries.MangaQuery) MangaUsecase {
+func CreateNewMangaUsecase(mangaQuery mangaQ.MangaQuery, chapterQuery chapterQ.ChapterQuery) MangaUsecase {
 	return &mangaCommandUsecase{
 		mangaQuery: mangaQuery,
+		chapterQuery: chapterQuery,
 	}
 }

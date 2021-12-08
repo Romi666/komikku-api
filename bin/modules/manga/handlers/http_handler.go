@@ -4,20 +4,22 @@ import (
 	"github.com/gocolly/colly"
 	"github.com/labstack/echo/v4"
 	"komiku-srapper/bin/config"
-	"komiku-srapper/bin/modules/manga/repositories/queries"
-	"komiku-srapper/bin/modules/manga/usecases"
+	chapterQ "komiku-srapper/bin/modules/chapter/repositories/queries"
+	mangaQ "komiku-srapper/bin/modules/manga/repositories/queries"
+	mangaU "komiku-srapper/bin/modules/manga/usecases"
 	"komiku-srapper/bin/pkg/utils"
 	"net/http"
 )
 
 type MangaHandler struct {
-	mangaCommandUsecase	usecases.MangaUsecase
+	mangaCommandUsecase	mangaU.MangaUsecase
 }
 
 func New() *MangaHandler {
 	collector := colly.NewCollector()
-	queryManga := queries.NewMangaQuery(config.GlobalEnv.BaseURL, collector)
-	queryUsecase := usecases.CreateNewMangaUsecase(queryManga)
+	queryManga := mangaQ.NewMangaQuery(config.GlobalEnv.BaseURL, collector)
+	queryChapter := chapterQ.NewChapterQuery(config.GlobalEnv.BaseURL, collector)
+	queryUsecase := mangaU.CreateNewMangaUsecase(queryManga, queryChapter)
 	return &MangaHandler{
 		mangaCommandUsecase: queryUsecase,
 	}
@@ -27,7 +29,6 @@ func New() *MangaHandler {
 func(m *MangaHandler) Mount(router *echo.Echo) {
 	router.GET("/comic/list", m.GetAllComic)
 	router.GET("/comic/:endpoint", m.GetComicInfo)
-	router.GET("/comic/chapter/:endpoint", m.GetChapterDetail)
 	router.GET("/comic/search", m.SearchManga)
 	router.GET("/comic/genre", m.GetAllGenre)
 	router.GET("/comic/popular", m.GetPopularManga)
@@ -53,17 +54,6 @@ func(m *MangaHandler) GetComicInfo(c echo.Context) error {
 	}
 
 	return utils.Response(result.Data, "Get Comic Info", http.StatusOK, c)
-}
-
-func(m *MangaHandler) GetChapterDetail(c echo.Context) error {
-	endpoint := c.Param("endpoint")
-	result := m.mangaCommandUsecase.GetChapterDetail(endpoint)
-
-	if result.Error != nil {
-		return utils.ResponseError(result.Error, c)
-	}
-
-	return utils.Response(result.Data, "Get Chapter Detail", http.StatusOK, c)
 }
 
 func(m *MangaHandler) SearchManga(c echo.Context) error {

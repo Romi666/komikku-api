@@ -5,7 +5,8 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"komiku-srapper/bin/config"
-	"komiku-srapper/bin/modules/manga/handlers"
+	chapterH "komiku-srapper/bin/modules/chapter/handlers"
+	mangaH "komiku-srapper/bin/modules/manga/handlers"
 )
 
 func main() {
@@ -14,8 +15,11 @@ func main() {
 
 	e.Use(middleware.CORS())
 
-	comicHttp := handlers.New()
+	comicHttp := mangaH.New()
 	comicHttp.Mount(e)
+
+	chapterHttp :=chapterH.New()
+	chapterHttp.Mount(e)
 
 	listenerPort := fmt.Sprintf(":%d", config.GlobalEnv.HTTPPort)
 	e.Logger.Fatal(e.Start(listenerPort))
