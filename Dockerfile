@@ -9,8 +9,8 @@ RUN apk add --update --no-cache --virtual .build-dev build-base git
 
 COPY . .
 
-RUN go mod download \
-  && go build -tags musl -o main ./bin/app
+RUN make install \
+  && make build
 
 # Expose port
 EXPOSE 3011
