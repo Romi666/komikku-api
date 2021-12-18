@@ -15,5 +15,11 @@ build:
 down:
 	docker-compose down
 
+image:
+	docker build -t romi666/komikku-api:1.0 .
+
+push:
+	docker push romi666/komikku-api:1.0
+
 start:
 	./main
