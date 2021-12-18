@@ -1,0 +1,8 @@
+version: "3"
+services:
+  web:
+    image: romi666/komikku-api:1.0
+    container_name: komikku-api
+    build: .
+    ports:
+      - 3011:3011

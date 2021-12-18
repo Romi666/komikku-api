@@ -10,7 +10,10 @@ install:
 	go mod download
 
 build:
-	go build -tags musl -o main ./bin/app
+	docker-compose up -d
+
+down:
+	docker-compose down
 
 start:
 	./main
