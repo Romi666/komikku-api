@@ -3,9 +3,9 @@ package queries
 import (
 	"fmt"
 	"github.com/gocolly/colly"
-	"komiku-srapper/bin/config"
-	"komiku-srapper/bin/modules/manga/models/domain"
-	"komiku-srapper/bin/pkg/utils"
+	"komikku-api/bin/config"
+	"komikku-api/bin/modules/manga/models/domain"
+	"komikku-api/bin/pkg/utils"
 	"strings"
 )
 

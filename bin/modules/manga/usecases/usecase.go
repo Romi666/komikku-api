@@ -1,6 +1,6 @@
 package usecases
 
-import "komiku-srapper/bin/pkg/utils"
+import "komikku-api/bin/pkg/utils"
 
 type MangaUsecase interface {
 	GetAllComic(filter string) utils.Result

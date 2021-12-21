@@ -3,10 +3,10 @@ package handlers
 import (
 	"github.com/gocolly/colly"
 	"github.com/labstack/echo/v4"
-	"komiku-srapper/bin/config"
-	chapterQ "komiku-srapper/bin/modules/chapter/repositories/queries"
-	chapterU "komiku-srapper/bin/modules/chapter/usecases"
-	"komiku-srapper/bin/pkg/utils"
+	"komikku-api/bin/config"
+	chapterQ "komikku-api/bin/modules/chapter/repositories/queries"
+	chapterU "komikku-api/bin/modules/chapter/usecases"
+	"komikku-api/bin/pkg/utils"
 	"net/http"
 )
 

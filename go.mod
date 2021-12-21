@@ -1,4 +1,4 @@
-module komiku-srapper
+module komikku-api
 
 go 1.16
 

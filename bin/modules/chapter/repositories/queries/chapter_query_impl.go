@@ -2,9 +2,9 @@ package queries
 
 import (
 	"github.com/gocolly/colly"
-	"komiku-srapper/bin/config"
-	"komiku-srapper/bin/modules/chapter/models/domain"
-	"komiku-srapper/bin/pkg/utils"
+	"komikku-api/bin/config"
+	"komikku-api/bin/modules/chapter/models/domain"
+	"komikku-api/bin/pkg/utils"
 )
 
 type ChapterQueryImpl struct {

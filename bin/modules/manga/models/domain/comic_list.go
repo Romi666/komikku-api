@@ -1,6 +1,6 @@
 package domain
 
-import "komiku-srapper/bin/modules/chapter/models/domain"
+import "komikku-api/bin/modules/chapter/models/domain"
 
 type (
 	Comic struct {

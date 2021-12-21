@@ -2,12 +2,12 @@ package usecases
 
 import (
 	"fmt"
-	chapterM "komiku-srapper/bin/modules/chapter/models/domain"
-	chapterQ "komiku-srapper/bin/modules/chapter/repositories/queries"
-	mangaM "komiku-srapper/bin/modules/manga/models/domain"
-	mangaQ "komiku-srapper/bin/modules/manga/repositories/queries"
-	httpError "komiku-srapper/bin/pkg/http-error"
-	"komiku-srapper/bin/pkg/utils"
+	chapterM "komikku-api/bin/modules/chapter/models/domain"
+	chapterQ "komikku-api/bin/modules/chapter/repositories/queries"
+	mangaM "komikku-api/bin/modules/manga/models/domain"
+	mangaQ "komikku-api/bin/modules/manga/repositories/queries"
+	httpError "komikku-api/bin/pkg/http-error"
+	"komikku-api/bin/pkg/utils"
 )
 
 type mangaCommandUsecase struct {

@@ -1,6 +1,6 @@
 package queries
 
-import "komiku-srapper/bin/pkg/utils"
+import "komikku-api/bin/pkg/utils"
 
 type ChapterQuery interface {
 	GetListChapter(endpoint string) utils.Result

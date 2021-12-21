@@ -3,7 +3,7 @@ package utils
 import (
 	"github.com/labstack/echo/v4"
 	logger "github.com/sirupsen/logrus"
-	httpError "komiku-srapper/bin/pkg/http-error"
+	httpError "komikku-api/bin/pkg/http-error"
 	"net/http"
 )
 

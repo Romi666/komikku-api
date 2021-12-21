@@ -1,6 +1,6 @@
 package queries
 
-import "komiku-srapper/bin/pkg/utils"
+import "komikku-api/bin/pkg/utils"
 
 type MangaQuery interface {
 	GetAllComic(filter string) utils.Result

@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"komiku-srapper/bin/config"
-	chapterH "komiku-srapper/bin/modules/chapter/handlers"
-	mangaH "komiku-srapper/bin/modules/manga/handlers"
-	"komiku-srapper/bin/pkg/middlewares"
+	"komikku-api/bin/config"
+	chapterH "komikku-api/bin/modules/chapter/handlers"
+	mangaH "komikku-api/bin/modules/manga/handlers"
+	"komikku-api/bin/pkg/middlewares"
 )
 
 func main() {
