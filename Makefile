@@ -9,7 +9,10 @@ everything-oke:
 install:
 	go mod download
 
-build:
+make build:
+	go build -tags musl -o main ./bin/app
+
+up:
 	docker-compose up -d
 
 down:
