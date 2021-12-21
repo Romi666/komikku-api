@@ -14,6 +14,7 @@ func main() {
 	e := echo.New()
 
 	e.Use(middleware.CORS())
+	e.Use(middleware.Recover())
 
 	comicHttp := mangaH.New()
 	comicHttp.Mount(e)

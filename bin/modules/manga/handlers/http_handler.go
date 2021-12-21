@@ -1,14 +1,17 @@
 package handlers
 
 import (
+	"fmt"
 	"github.com/gocolly/colly"
 	"github.com/labstack/echo/v4"
 	"komiku-srapper/bin/config"
 	chapterQ "komiku-srapper/bin/modules/chapter/repositories/queries"
 	mangaQ "komiku-srapper/bin/modules/manga/repositories/queries"
 	mangaU "komiku-srapper/bin/modules/manga/usecases"
+	httpError "komiku-srapper/bin/pkg/http-error"
 	"komiku-srapper/bin/pkg/utils"
 	"net/http"
+	"strconv"
 )
 
 type MangaHandler struct {
@@ -69,6 +72,7 @@ func(m *MangaHandler) SearchManga(c echo.Context) error {
 }
 
 func (m *MangaHandler) GetAllGenre(c echo.Context) error {
+
 	result := m.mangaCommandUsecase.GetAllGenre()
 
 	if result.Error != nil {
@@ -79,7 +83,15 @@ func (m *MangaHandler) GetAllGenre(c echo.Context) error {
 }
 
 func (m *MangaHandler) GetPopularManga(c echo.Context) error {
-	result := m.mangaCommandUsecase.GetPopularManga()
+	page, err := strconv.Atoi(c.QueryParam("page"));
+
+	if err != nil {
+		errObj := httpError.NewBadRequest()
+		errObj.Message = fmt.Sprintf("%v", err.Error())
+		return utils.ResponseError(errObj, c)
+	}
+
+	result := m.mangaCommandUsecase.GetPopularManga(page)
 
 	if result.Error != nil {
 		return utils.ResponseError(result.Error, c)
@@ -89,7 +101,14 @@ func (m *MangaHandler) GetPopularManga(c echo.Context) error {
 }
 
 func (m *MangaHandler) GetRecommendedManga(c echo.Context) error {
-	result := m.mangaCommandUsecase.GetRecommendedManga()
+	page, err := strconv.Atoi(c.QueryParam("page"))
+	if err != nil {
+		errObj := httpError.NewBadRequest()
+		errObj.Message = fmt.Sprintf("%v", err.Error())
+		return utils.ResponseError(errObj, c)
+	}
+
+	result := m.mangaCommandUsecase.GetRecommendedManga(page)
 
 	if result.Error != nil {
 		return utils.ResponseError(result.Error, c)
@@ -99,7 +118,14 @@ func (m *MangaHandler) GetRecommendedManga(c echo.Context) error {
 }
 
 func (m *MangaHandler) GetNewestManga(c echo.Context) error  {
-	result := m.mangaCommandUsecase.GetNewestManga()
+	page, err := strconv.Atoi(c.QueryParam("page"))
+	if err != nil {
+		errObj := httpError.NewBadRequest()
+		errObj.Message = fmt.Sprintf("%v", err.Error())
+		return utils.ResponseError(errObj, c)
+	}
+
+	result := m.mangaCommandUsecase.GetNewestManga(page)
 
 	if result.Error != nil {
 		return utils.ResponseError(result.Error, c)

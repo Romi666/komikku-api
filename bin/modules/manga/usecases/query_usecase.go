@@ -116,10 +116,10 @@ func (m mangaCommandUsecase) GetAllGenre() utils.Result {
 	return result
 }
 
-func (m mangaCommandUsecase) GetPopularManga() utils.Result {
+func (m mangaCommandUsecase) GetPopularManga(page int) utils.Result {
 	var result utils.Result
 
-	queryRes := m.mangaQuery.GetPopularManga()
+	queryRes := m.mangaQuery.GetPopularManga(page)
 
 	if queryRes.Error != nil {
 		errObj := httpError.NewNotFound()
@@ -140,10 +140,10 @@ func (m mangaCommandUsecase) GetPopularManga() utils.Result {
 	return result
 }
 
-func (m mangaCommandUsecase) GetRecommendedManga() utils.Result {
+func (m mangaCommandUsecase) GetRecommendedManga(page int) utils.Result {
 	var result utils.Result
 
-	queryRes := m.mangaQuery.GetRecommendedManga()
+	queryRes := m.mangaQuery.GetRecommendedManga(page)
 
 	if queryRes.Error != nil {
 		errObj := httpError.NewNotFound()
@@ -164,10 +164,10 @@ func (m mangaCommandUsecase) GetRecommendedManga() utils.Result {
 	return result
 }
 
-func (m mangaCommandUsecase) GetNewestManga() utils.Result {
+func (m mangaCommandUsecase) GetNewestManga(page int) utils.Result {
 	var result utils.Result
 
-	queryRes := m.mangaQuery.GetNewestManga()
+	queryRes := m.mangaQuery.GetNewestManga(page)
 
 	if queryRes.Error != nil {
 		errObj := httpError.NewNotFound()

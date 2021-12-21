@@ -158,10 +158,19 @@ func (g MangaQueryImpl) GetAllGenre() utils.Result {
 	return output
 }
 
-func (g MangaQueryImpl) GetPopularManga() utils.Result {
-	var output utils.Result
-	var result []domain.Comic
-	g.URL = fmt.Sprint("https://data.komiku.id/other/hot/")
+func (g MangaQueryImpl) GetPopularManga(page int) utils.Result {
+	var (
+		output utils.Result
+		result []domain.Comic
+		err		error
+	)
+
+	if page != 1 {
+		g.URL = fmt.Sprintf("https://data.komiku.id/other/hot/page/%d/", page)
+	} else {
+		g.URL = fmt.Sprint("https://data.komiku.id/other/hot/")
+	}
+
 	g.Collector.AllowURLRevisit = true
 	g.Collector.OnHTML("div.bge", func(e *colly.HTMLElement) {
 		var comic domain.Comic
@@ -176,7 +185,7 @@ func (g MangaQueryImpl) GetPopularManga() utils.Result {
 		})
 		result = append(result, comic)
 	})
-	err := g.Collector.Visit(g.URL)
+	err = g.Collector.Visit(g.URL)
 	if err != nil {
 		output = utils.Result{
 			Error: err,
@@ -192,10 +201,19 @@ func (g MangaQueryImpl) GetPopularManga() utils.Result {
 	return output
 }
 
-func (g MangaQueryImpl) GetRecommendedManga() utils.Result {
-	var output utils.Result
-	var result []domain.Comic
-	g.URL = fmt.Sprint("https://data.komiku.id/other/rekomendasi/")
+func (g MangaQueryImpl) GetRecommendedManga(page int) utils.Result {
+	var (
+		output utils.Result
+		result []domain.Comic
+		err		error
+	)
+
+	if page != 1 {
+		g.URL = fmt.Sprintf("https://data.komiku.id/other/rekomendasi/page/%d/", page)
+	}else {
+		g.URL = fmt.Sprint("https://data.komiku.id/other/rekomendasi/")
+	}
+
 	g.Collector.AllowURLRevisit = true
 	g.Collector.OnHTML("div.bge", func(e *colly.HTMLElement) {
 		var comic domain.Comic
@@ -210,7 +228,7 @@ func (g MangaQueryImpl) GetRecommendedManga() utils.Result {
 		})
 		result = append(result, comic)
 	})
-	err := g.Collector.Visit(g.URL)
+	err = g.Collector.Visit(g.URL)
 	if err != nil {
 		output = utils.Result{
 			Error: err,
@@ -226,10 +244,19 @@ func (g MangaQueryImpl) GetRecommendedManga() utils.Result {
 	return output
 }
 
-func (g MangaQueryImpl) GetNewestManga() utils.Result {
-	var output utils.Result
-	var result []domain.Comic
-	g.URL = fmt.Sprint("https://data.komiku.id/pustaka/")
+func (g MangaQueryImpl) GetNewestManga(page int) utils.Result {
+	var (
+		output utils.Result
+		result []domain.Comic
+		err		error
+	)
+
+	if page != 1 {
+		g.URL = fmt.Sprintf("https://data.komiku.id/pustaka/page/%d/", page)
+	} else {
+		g.URL = fmt.Sprint("https://data.komiku.id/pustaka/")
+	}
+
 	g.Collector.AllowURLRevisit = true
 	g.Collector.OnHTML("div.bge", func(e *colly.HTMLElement) {
 		var comic domain.Comic
@@ -244,7 +271,7 @@ func (g MangaQueryImpl) GetNewestManga() utils.Result {
 		})
 		result = append(result, comic)
 	})
-	err := g.Collector.Visit(g.URL)
+	err = g.Collector.Visit(g.URL)
 	if err != nil {
 		output = utils.Result{
 			Error: err,
