@@ -7,6 +7,7 @@ import (
 	"komiku-srapper/bin/config"
 	chapterH "komiku-srapper/bin/modules/chapter/handlers"
 	mangaH "komiku-srapper/bin/modules/manga/handlers"
+	"komiku-srapper/bin/pkg/middlewares"
 )
 
 func main() {
@@ -15,6 +16,7 @@ func main() {
 
 	e.Use(middleware.CORS())
 	e.Use(middleware.Recover())
+	e.Use(middlewares.Logger())
 
 	comicHttp := mangaH.New()
 	comicHttp.Mount(e)
