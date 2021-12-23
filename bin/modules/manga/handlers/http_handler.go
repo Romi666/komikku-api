@@ -32,11 +32,11 @@ func New() *MangaHandler {
 func(m *MangaHandler) Mount(router *echo.Echo) {
 	router.GET("/comic/list", m.GetAllComic)
 	router.GET("/comic/info/:endpoint", m.GetComicInfo)
-	router.GET("/comic/search", m.SearchManga)
+	router.GET("/comic/search/:query", m.SearchManga)
 	router.GET("/comic/genre", m.GetAllGenre)
 	router.GET("/comic/popular", m.GetPopularManga)
-	router.GET("/comic/recommended", m.GetRecommendedManga)
-	router.GET("/comic/newest", m.GetNewestManga)
+	router.GET("/comic/recommended/page/:page", m.GetRecommendedManga)
+	router.GET("/comic/newest/page/:page", m.GetNewestManga)
 	router.GET("/comic/genres/:endpoint/page/:page", m.GetByGenre)
 }
 
@@ -62,7 +62,7 @@ func(m *MangaHandler) GetComicInfo(c echo.Context) error {
 }
 
 func(m *MangaHandler) SearchManga(c echo.Context) error {
-	query := c.QueryParam("query")
+	query := c.Param("query")
 	result := m.mangaCommandUsecase.SearchManga(query)
 
 	if result.Error != nil {
@@ -102,7 +102,7 @@ func (m *MangaHandler) GetPopularManga(c echo.Context) error {
 }
 
 func (m *MangaHandler) GetRecommendedManga(c echo.Context) error {
-	page, err := strconv.Atoi(c.QueryParam("page"))
+	page, err := strconv.Atoi(c.Param("page"))
 	if err != nil {
 		errObj := httpError.NewBadRequest()
 		errObj.Message = fmt.Sprintf("%v", err.Error())
@@ -119,7 +119,7 @@ func (m *MangaHandler) GetRecommendedManga(c echo.Context) error {
 }
 
 func (m *MangaHandler) GetNewestManga(c echo.Context) error  {
-	page, err := strconv.Atoi(c.QueryParam("page"))
+	page, err := strconv.Atoi(c.Param("page"))
 	if err != nil {
 		errObj := httpError.NewBadRequest()
 		errObj.Message = fmt.Sprintf("%v", err.Error())

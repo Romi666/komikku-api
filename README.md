@@ -54,17 +54,17 @@ POSTMAN COLLECTION = https://www.getpostman.com/collections/4c984c36d27bb591c445
 
 #### Get Popular Comic
    ```
-   http://localhost:3011/comic/popular?page=1
+   http://localhost:3011/comic/popular/page/1
    ```
 
 #### Get Recommended Comic
    ```
-   http://localhost:3011/comic/recommended?page=1
+   http://localhost:3011/comic/recommended/page/1
    ```
 
 #### Get Newest Comic
    ```
-   http://localhost:3011/comic/newest?page=2
+   http://localhost:3011/comic/newest/page/1
    ```
 
 ### API Example
@@ -73,9 +73,11 @@ POSTMAN COLLECTION = https://www.getpostman.com/collections/4c984c36d27bb591c445
     "success": true,
     "data": [
         {
-            "title": ".hack//G.U.+",
-            "image": "https://thumbnail.komiku.id/wp-content/uploads/Manga-hackGU.jpg",
-            "endpoint": "/manga/hack-g-u/"
+            "title": "Super Mechanic (The Legendary Mechanic)",
+            "image": "https://thumbnail.komiku.id/wp-content/uploads/2021/03/Komik-Super-Mechanic-The-Legendary-Mechanic.jpg",
+            "desc": "Pemain game veteran Han Xiao dari “Xinghai” meninggal secara tak terduga selama power leveling.",
+            "type": "Manhua",
+            "endpoint": "/manga/super-mechanic-the-legendary-mechanic/"
         }
     ],
     "message": "Get All Comic",
@@ -85,7 +87,7 @@ POSTMAN COLLECTION = https://www.getpostman.com/collections/4c984c36d27bb591c445
 
 ## Get Comic Info
    ```
-   http://localhost:3011/comic{endpoint}
+   http://localhost:3011/comic/{endpoint}
    ```
 
 ### API Example
@@ -143,12 +145,12 @@ POSTMAN COLLECTION = https://www.getpostman.com/collections/4c984c36d27bb591c445
 
 ## Search Comic
    ```
-   http://localhost:3011/comic/search?query={comicName}
+   http://localhost:3011/comic/search/{query}
    ```
 
 ### API Example
    ```
-   http://localhost:3011/comic/search?query=one%20punch
+   http://localhost:3011/comic/search/one%20punch
    ```
    ```
    {
@@ -157,26 +159,36 @@ POSTMAN COLLECTION = https://www.getpostman.com/collections/4c984c36d27bb591c445
         {
             "title": "One Punch Man",
             "image": "https://thumbnail.komiku.id/wp-content/uploads/Manga-One-Punch-Man.png",
+            "desc": "Update 5 hari lalu. Saitama dapat melumpuhkan siapa saja dan apa pun hanya dengan satu pukulan.",
+            "type": "Manga",
             "endpoint": "/manga/one-punch-man/"
         },
         {
             "title": "Onepunchman Saitama vs God",
             "image": "https://thumbnail.komiku.id/wp-content/uploads/Manga-Onepunchman-Saitama-vs-God.jpg",
+            "desc": "Update 2 tahun lalu. Berputar di sekitar pahlawan super tituler yang telah berlatih sangat keras sehingga rambutnya rontok.",
+            "type": "Manga",
             "endpoint": "/manga/onepunchman-saitama-vs-god/"
         },
         {
             "title": "One-Punch Man (ONE)",
             "image": "https://thumbnail.komiku.id/wp-content/uploads/Manga-One-Punch-Man-ONE.jpg",
+            "desc": "Update 9 bulan lalu. Santai, berkepala dingin, dan terasa botak, Saitama memiliki penampilan seorang pria dewasa yang tidak berbahaya.",
+            "type": "Manga",
             "endpoint": "/manga/one-punch-man-one/"
         },
         {
             "title": "Here’s a Punch",
             "image": "https://thumbnail.komiku.id/wp-content/uploads/2021/09/Komik-Heres-a-Punch.png",
+            "desc": "Update 4 bulan lalu.  Li Xing, seorang mahasiswa, menemukan pekerjaan dengan bantuan mandor yang antusias. Tanpa diduga, kontraktor memiliki latar~",
+            "type": "Manhua",
             "endpoint": "/manga/heres-a-punch/"
         },
         {
             "title": "Fire Punch",
             "image": "https://thumbnail.komiku.id/wp-content/uploads/2020/09/Komik-Fire-Punc.jpg",
+            "desc": "Update 1 tahun lalu. Di masa lalu yang tidak terlalu lama, Penyihir Es menyelimuti dunia dengan salju.",
+            "type": "Manga",
             "endpoint": "/manga/fire-punch-2/"
         }
     ],
