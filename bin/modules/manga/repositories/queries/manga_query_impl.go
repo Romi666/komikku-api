@@ -98,9 +98,11 @@ func (g MangaQueryImpl) SearchManga(query string) utils.Result {
 	g.Collector.AllowURLRevisit = true
 	g.Collector.OnHTML("div.bge", func(e *colly.HTMLElement) {
 		var comic domain.Comic
+		comic.Desc = e.ChildText("p")
 		e.ForEach("div.bgei", func(i int, e2 *colly.HTMLElement) {
 			comic.Image = strings.TrimSuffix(e2.ChildAttr("img", "data-src"), "?resize=450,235&quality=60")
 			comic.Endpoint = strings.Replace(e2.ChildAttr("a", "href"), config.GlobalEnv.BaseURL, "", 1)
+			comic.Type = e2.ChildText("b")
 			comic.Endpoint = "/" + comic.Endpoint
 
 		})
@@ -174,9 +176,11 @@ func (g MangaQueryImpl) GetPopularManga(page int) utils.Result {
 	g.Collector.AllowURLRevisit = true
 	g.Collector.OnHTML("div.bge", func(e *colly.HTMLElement) {
 		var comic domain.Comic
+		comic.Desc = e.ChildText("p")
 		e.ForEach("div.bgei", func(i int, e2 *colly.HTMLElement) {
 			comic.Image = strings.TrimSuffix(e2.ChildAttr("img", "data-src"), "?resize=450,235&quality=60")
 			comic.Endpoint = strings.Replace(e2.ChildAttr("a", "href"), config.GlobalEnv.BaseURL, "", 1)
+			comic.Type = e2.ChildText("b")
 			comic.Endpoint = "/" + comic.Endpoint
 
 		})
@@ -217,9 +221,11 @@ func (g MangaQueryImpl) GetRecommendedManga(page int) utils.Result {
 	g.Collector.AllowURLRevisit = true
 	g.Collector.OnHTML("div.bge", func(e *colly.HTMLElement) {
 		var comic domain.Comic
+		comic.Desc = e.ChildText("p")
 		e.ForEach("div.bgei", func(i int, e2 *colly.HTMLElement) {
 			comic.Image = strings.Trim(e2.ChildAttr("img", "data-src"), "?resize=450,235&quality=60")
 			comic.Endpoint = strings.Replace(e2.ChildAttr("a", "href"), config.GlobalEnv.BaseURL, "", 1)
+			comic.Type = e2.ChildText("b")
 			comic.Endpoint = "/" + comic.Endpoint
 
 		})
@@ -260,9 +266,11 @@ func (g MangaQueryImpl) GetNewestManga(page int) utils.Result {
 	g.Collector.AllowURLRevisit = true
 	g.Collector.OnHTML("div.bge", func(e *colly.HTMLElement) {
 		var comic domain.Comic
+		comic.Desc = e.ChildText("p")
 		e.ForEach("div.bgei", func(i int, e2 *colly.HTMLElement) {
 			comic.Image = strings.TrimSuffix(e2.ChildAttr("img", "data-src"),"?resize=450,235&quality=60")
 			comic.Endpoint = strings.Replace(e2.ChildAttr("a", "href"), config.GlobalEnv.BaseURL, "", 1)
+			comic.Type = e2.ChildText("b")
 			comic.Endpoint = "/" + comic.Endpoint
 
 		})
