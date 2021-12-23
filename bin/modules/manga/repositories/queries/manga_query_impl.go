@@ -136,8 +136,7 @@ func (g MangaQueryImpl) GetAllGenre() utils.Result {
 	g.Collector.OnHTML("ul.genre", func(e *colly.HTMLElement) {
 		e.ForEach("li", func(i int, e2 *colly.HTMLElement) {
 			var genre domain.Genre
-			genre.Endpoint = strings.Replace(e2.ChildAttr("a", "href"), config.GlobalEnv.BaseURL, "", 1)
-			genre.Endpoint = "/" + genre.Endpoint
+			genre.Endpoint = strings.Replace(e2.ChildAttr("a", "href"), config.GlobalEnv.BaseURL + "genre/", "", -1)
 			genre.Title  = e2.ChildText("a")
 
 			result = append(result, genre)
@@ -294,4 +293,52 @@ func (g MangaQueryImpl) GetNewestManga(page int) utils.Result {
 
 	return output
 }
+
+func (g MangaQueryImpl) GetByGenre(endpoint string, page int) utils.Result {
+	var (
+		output utils.Result
+		result []domain.Comic
+		err		error
+	)
+
+	if page != 1 {
+		g.URL = fmt.Sprintf("https://komiku.id/genre/%s/page/%d/", endpoint, page)
+	} else {
+		g.URL = fmt.Sprintf("https://komiku.id/genre/%s/", endpoint)
+	}
+	fmt.Println(g.URL)
+
+	g.Collector.AllowURLRevisit = true
+	g.Collector.OnHTML("div.bge", func(e *colly.HTMLElement) {
+		var comic domain.Comic
+		comic.Desc = e.ChildText("p")
+		e.ForEach("div.bgei", func(i int, e2 *colly.HTMLElement) {
+			comic.Image = strings.TrimSuffix(e2.ChildAttr("img", "data-src"),"?resize=450,235&quality=60")
+			comic.Endpoint = strings.Replace(e2.ChildAttr("a", "href"), config.GlobalEnv.BaseURL, "", 1)
+			comic.Type = e2.ChildText("b")
+			comic.Endpoint = "/" + comic.Endpoint
+
+		})
+		e.ForEach("div.kan", func(i int, e2 *colly.HTMLElement) {
+			comic.Title = e2.ChildText("h3")
+		})
+		result = append(result, comic)
+	})
+	err = g.Collector.Visit(g.URL)
+	if err != nil {
+		output = utils.Result{
+			Error: err,
+		}
+
+		return output
+	}
+
+	output = utils.Result{
+		Data:  result,
+	}
+
+	return output
+}
+
+
 

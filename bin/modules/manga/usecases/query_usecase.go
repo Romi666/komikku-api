@@ -188,6 +188,32 @@ func (m mangaCommandUsecase) GetNewestManga(page int) utils.Result {
 	return result
 }
 
+func (m mangaCommandUsecase) GetByGenre(endpoint string, page int) utils.Result {
+	var result utils.Result
+
+	queryRes := m.mangaQuery.GetByGenre(endpoint, page)
+
+	if queryRes.Error != nil {
+		errObj := httpError.NewNotFound()
+		errObj.Message = fmt.Sprintf("%v", queryRes.Error)
+		result.Error = errObj
+		return result
+	}
+
+	resultGetComic := queryRes.Data.([]mangaM.Comic)
+	if len(resultGetComic) == 0 {
+		errObj := httpError.NewNotFound()
+		errObj.Message = fmt.Sprintf("%v", "Data not found")
+		result.Error = errObj
+		return result
+	}
+
+	result.Data = resultGetComic
+	return result
+}
+
+
+
 
 func CreateNewMangaUsecase(mangaQuery mangaQ.MangaQuery, chapterQuery chapterQ.ChapterQuery) MangaUsecase {
 	return &mangaCommandUsecase{

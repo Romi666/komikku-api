@@ -10,4 +10,5 @@ type MangaQuery interface {
 	GetPopularManga(page int) utils.Result
 	GetRecommendedManga(page int) utils.Result
 	GetNewestManga(page int) utils.Result
+	GetByGenre(endpoint string, page int) utils.Result
 }
