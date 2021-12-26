@@ -87,12 +87,12 @@ POSTMAN COLLECTION = https://www.getpostman.com/collections/4c984c36d27bb591c445
 
 ## Get Comic Info
    ```
-   https://komikku.my.id/api/comic/{endpoint}
+   https://komikku.my.id/api/comic/info/{endpoint}
    ```
 
 ### API Example
    ```
-   https://komikku.my.id/api/comic/manga/hack-g-u/
+   https://komikku.my.id/api/comic/info/manga/hack-g-u/
    ```
    ```
    {
@@ -204,7 +204,7 @@ POSTMAN COLLECTION = https://www.getpostman.com/collections/4c984c36d27bb591c445
 
 ### API Example
    ```
-   https://komikku.my.id/api/comic/manga/hack-g-u/
+   https://komikku.my.id/api/comic/chapter/ch/hack-g-u-chapter-1/
    ```
    ```
    {
