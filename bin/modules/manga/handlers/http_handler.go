@@ -30,14 +30,15 @@ func New() *MangaHandler {
 
 //Mount function
 func(m *MangaHandler) Mount(router *echo.Echo) {
-	router.GET("/comic/list", m.GetAllComic)
-	router.GET("/comic/info/:endpoint", m.GetComicInfo)
-	router.GET("/comic/search/:query", m.SearchManga)
-	router.GET("/comic/genre", m.GetAllGenre)
-	router.GET("/comic/popular", m.GetPopularManga)
-	router.GET("/comic/recommended/page/:page", m.GetRecommendedManga)
-	router.GET("/comic/newest/page/:page", m.GetNewestManga)
-	router.GET("/comic/genres/:endpoint/page/:page", m.GetByGenre)
+	api := router.Group("/api")
+	api.GET("/comic/list", m.GetAllComic)
+	api.GET("/comic/info/:endpoint", m.GetComicInfo)
+	api.GET("/comic/search/:query", m.SearchManga)
+	api.GET("/comic/genre", m.GetAllGenre)
+	api.GET("/comic/popular", m.GetPopularManga)
+	api.GET("/comic/recommended/page/:page", m.GetRecommendedManga)
+	api.GET("/comic/newest/page/:page", m.GetNewestManga)
+	api.GET("/comic/genres/:endpoint/page/:page", m.GetByGenre)
 }
 
 func(m *MangaHandler) GetAllComic(c echo.Context) error {

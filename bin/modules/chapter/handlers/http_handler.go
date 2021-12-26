@@ -25,7 +25,8 @@ func New() *ChapterHandler {
 }
 
 func (c *ChapterHandler) Mount(router *echo.Echo)  {
-	router.GET("/comic/chapter/:endpoint", c.GetChapterDetail)
+	api := router.Group("/api")
+	api.GET("/comic/chapter/:endpoint", c.GetChapterDetail)
 }
 
 func(m *ChapterHandler) GetChapterDetail(c echo.Context) error {

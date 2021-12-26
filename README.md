@@ -46,25 +46,25 @@ POSTMAN COLLECTION = https://www.getpostman.com/collections/4c984c36d27bb591c445
 #### Get Comic List
 
    ```
-   http://localhost:3011/comic/list
-   http://localhost:3011/comic/list?filter=manga
-   http://localhost:3011/comic/list?filter=manhwa
-   http://localhost:3011/comic/list?filter=manhua
+   https://komikku.my.id/api/comic/list
+   https://komikku.my.id/api/comic/list?filter=manga
+   https://komikku.my.id/api/comic/list?filter=manhwa
+   https://komikku.my.id/api/comic/list?filter=manhua
    ```
 
 #### Get Popular Comic
    ```
-   http://localhost:3011/comic/popular/page/1
+   https://komikku.my.id/api/comic/popular/page/1
    ```
 
 #### Get Recommended Comic
    ```
-   http://localhost:3011/comic/recommended/page/1
+   https://komikku.my.id/api/comic/recommended/page/1
    ```
 
 #### Get Newest Comic
    ```
-   http://localhost:3011/comic/newest/page/1
+   https://komikku.my.id/api/comic/newest/page/1
    ```
 
 ### API Example
@@ -87,12 +87,12 @@ POSTMAN COLLECTION = https://www.getpostman.com/collections/4c984c36d27bb591c445
 
 ## Get Comic Info
    ```
-   http://localhost:3011/comic/{endpoint}
+   https://komikku.my.id/api/comic/{endpoint}
    ```
 
 ### API Example
    ```
-   http://localhost:3011/comic/manga/hack-g-u/
+   https://komikku.my.id/api/comic/manga/hack-g-u/
    ```
    ```
    {
@@ -145,12 +145,12 @@ POSTMAN COLLECTION = https://www.getpostman.com/collections/4c984c36d27bb591c445
 
 ## Search Comic
    ```
-   http://localhost:3011/comic/search/{query}
+   https://komikku.my.id/api/comic/search/{query}
    ```
 
 ### API Example
    ```
-   http://localhost:3011/comic/search/one%20punch
+   https://komikku.my.id/api/comic/search/one%20punch
    ```
    ```
    {
@@ -199,12 +199,12 @@ POSTMAN COLLECTION = https://www.getpostman.com/collections/4c984c36d27bb591c445
 
 ## Get Chapter Detail
    ```
-   http://localhost:3011/comic/chapter{endpoint chapter}
+   https://komikku.my.id/api/comic/chapter{endpoint chapter}
    ```
 
 ### API Example
    ```
-   http://localhost:3011/comic/manga/hack-g-u/
+   https://komikku.my.id/api/comic/manga/hack-g-u/
    ```
    ```
    {
