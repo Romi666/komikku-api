@@ -6,8 +6,8 @@ type (
 	Comic struct {
 		Title		string	`json:"title"`
 		Image		string	`json:"image"`
-		Desc		string 	`json:"desc"`
-		Type		string 	`json:"type"`
+		Desc		string 	`json:"desc,omitempty"`
+		Type		string 	`json:"type,omitempty"`
 		Endpoint	string	`json:"endpoint"`
 	}
 
