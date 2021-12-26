@@ -35,7 +35,7 @@ func(m *MangaHandler) Mount(router *echo.Echo) {
 	api.GET("/comic/info/:endpoint", m.GetComicInfo)
 	api.GET("/comic/search/:query", m.SearchManga)
 	api.GET("/comic/genre", m.GetAllGenre)
-	api.GET("/comic/popular", m.GetPopularManga)
+	api.GET("/comic/popular/page/:page", m.GetPopularManga)
 	api.GET("/comic/recommended/page/:page", m.GetRecommendedManga)
 	api.GET("/comic/newest/page/:page", m.GetNewestManga)
 	api.GET("/comic/genres/:endpoint/page/:page", m.GetByGenre)
@@ -85,7 +85,7 @@ func (m *MangaHandler) GetAllGenre(c echo.Context) error {
 }
 
 func (m *MangaHandler) GetPopularManga(c echo.Context) error {
-	page, err := strconv.Atoi(c.QueryParam("page"));
+	page, err := strconv.Atoi(c.Param("page"))
 
 	if err != nil {
 		errObj := httpError.NewBadRequest()
