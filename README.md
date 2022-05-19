@@ -46,25 +46,25 @@ POSTMAN COLLECTION = https://www.getpostman.com/collections/4c984c36d27bb591c445
 #### Get Comic List
 
    ```
-   https://komikku.my.id/api/comic/list
-   https://komikku.my.id/api/comic/list?filter=manga
-   https://komikku.my.id/api/comic/list?filter=manhwa
-   https://komikku.my.id/api/comic/list?filter=manhua
+   https://komiku-api.fly.dev/api/comic/list
+   https://komiku-api.fly.dev/api/comic/list?filter=manga
+   https://komiku-api.fly.dev/api/comic/list?filter=manhwa
+   https://komiku-api.fly.dev/api/comic/list?filter=manhua
    ```
 
 #### Get Popular Comic
    ```
-   https://komikku.my.id/api/comic/popular/page/1
+   https://komiku-api.fly.dev/api/comic/popular/page/1
    ```
 
 #### Get Recommended Comic
    ```
-   https://komikku.my.id/api/comic/recommended/page/1
+   https://komiku-api.fly.dev/api/comic/recommended/page/1
    ```
 
 #### Get Newest Comic
    ```
-   https://komikku.my.id/api/comic/newest/page/1
+   https://komiku-api.fly.dev/api/comic/newest/page/1
    ```
 
 ### API Example
@@ -87,12 +87,12 @@ POSTMAN COLLECTION = https://www.getpostman.com/collections/4c984c36d27bb591c445
 
 ## Get Comic Info
    ```
-   https://komikku.my.id/api/comic/info/{endpoint}
+   https://komiku-api.fly.dev/api/comic/info/{endpoint}
    ```
 
 ### API Example
    ```
-   https://komikku.my.id/api/comic/info/manga/hack-g-u/
+   https://komiku-api.fly.dev/api/comic/info/manga/hack-g-u/
    ```
    ```
    {
@@ -145,12 +145,12 @@ POSTMAN COLLECTION = https://www.getpostman.com/collections/4c984c36d27bb591c445
 
 ## Search Comic
    ```
-   https://komikku.my.id/api/comic/search/{query}
+   https://komiku-api.fly.dev/api/comic/search/{query}
    ```
 
 ### API Example
    ```
-   https://komikku.my.id/api/comic/search/one%20punch
+   https://komiku-api.fly.dev/api/comic/search/one%20punch
    ```
    ```
    {
@@ -199,12 +199,12 @@ POSTMAN COLLECTION = https://www.getpostman.com/collections/4c984c36d27bb591c445
 
 ## Get Chapter Detail
    ```
-   https://komikku.my.id/api/comic/chapter{endpoint chapter}
+   https://komiku-api.fly.dev/api/comic/chapter{endpoint chapter}
    ```
 
 ### API Example
    ```
-   https://komikku.my.id/api/comic/chapter/ch/hack-g-u-chapter-1/
+   https://komiku-api.fly.dev/api/comic/chapter/ch/hack-g-u-chapter-1/
    ```
    ```
    {
